@@ -1,0 +1,6 @@
+venv
+data/* 
+file_db/audio/* 
+file_db/transcription/*
+chroma
+database.db
