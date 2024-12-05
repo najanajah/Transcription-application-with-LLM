@@ -2,15 +2,13 @@
 # Transcription Application With LLM Intergration 
 
 **Description**  
-This project is created as a part of Final Year Project at NTU to create an intuitive transcription software utilizing LLMs for information extraction.
-
-Exploration of transcript improvement and optimisation is further explored in the `.\LLM-integration-exploration` directory. Please reference the `README.md` in the respective repository. 
+This project is created as a part of Final Year Project at NTU to create an intuitive transcription software utilizing LLMs for information extraction. Exploration of transcript improvement and optimisation is further explored in the `.\LLM-integration-exploration` directory. Please reference the `README.md` in the respective repository. 
 ---
 
 ## Table of Contents
 
 - [Transcription Application With LLM Intergration](#transcription-application-with-llm-intergration)
-  - [Exploration of transcript improvement and optimisation is further explored in the `.\LLM-integration-exploration` directory. Please reference the `README.md` in the respective repository.](#exploration-of-transcript-improvement-and-optimisation-is-further-explored-in-the-llm-integration-exploration-directory-please-reference-the-readmemd-in-the-respective-repository)
+  - [This project is created as a part of Final Year Project at NTU to create an intuitive transcription software utilizing LLMs for information extraction. Exploration of transcript improvement and optimisation is further explored in the `.\LLM-integration-exploration` directory. Please reference the `README.md` in the respective repository.](#this-project-is-created-as-a-part-of-final-year-project-at-ntu-to-create-an-intuitive-transcription-software-utilizing-llms-for-information-extraction-exploration-of-transcript-improvement-and-optimisation-is-further-explored-in-the-llm-integration-exploration-directory-please-reference-the-readmemd-in-the-respective-repository)
   - [Table of Contents](#table-of-contents)
   - [Features](#features)
   - [Installation](#installation)
