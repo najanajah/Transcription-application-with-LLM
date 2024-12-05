@@ -1,5 +1,4 @@
-KEYWORDS_PROMPT = '''{context}
-extract keywords from the above context and combine them in a JSON format. Do not answer with anything other than the json text'''
+
 
 SPEAKER_ID_PROMPT = '''{context} \n Identify which SPEAKER from SPEAKER_00 and SPEAKER_01 is INTERVIEWER and INTERVIEWEE in the above context return as a json file. Do not answer with anything other than the json text \n example of returned answer \n {{ "SPEAKER_01" : "INTERVIEWER", "SPEAKER_00" : "INTERVIEWEE"}}'''
 

@@ -31,13 +31,7 @@ def add_new_transcription_to_db_return_features(filename, transcription, audio_f
         dt = datetime.datetime.now()
         result = cursor.execute("INSERT INTO transcriptions (file_name, transcription, date_created, audio_file_name) VALUES (?,?,?,?)", (filename, transcription,dt.strftime("%Y-%m-%d %H:%M:%S"), audio_file_name))
         id = result.lastrowid
-        if DEBUG:
-            summary = "updated summary"
-            keywords = "updated keywords"
-            background = "updated background"
-            reflection = "updated reflection"
-            conclusion = "updated conclusion"
-        else:
+        if True: # placeholder indentation need to remove
             try:
                 summary = generate_summary(transcription)
                 keywords = generate_keywords(transcription)
@@ -116,6 +110,7 @@ def update_transcription(id: int, new_transcription: str):
         summary = "updated summary"
         reflection = "updated reflection"
         conclusion = "updated conclusion"
+        keywords = '''{"Keywords": ["updated", "keywords", "posting", "surgical", "emergency"]}'''
     else:
         summary = generate_summary(new_transcription)
         keywords = generate_keywords(new_transcription)

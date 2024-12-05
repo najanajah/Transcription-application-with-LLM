@@ -34,18 +34,17 @@ try:
     st.write("Upload your audio file for transcription and speaker diarization.")
     with st.form("my-form", clear_on_submit=True):
         audio_file_list = st.file_uploader("Upload a file", type=["wav", "mp3", "mp4"] , accept_multiple_files=True) 
-        print(len(audio_file_list))
         ## replay audio file 
         if audio_file_list: 
             for i in range(0, len(audio_file_list)):
-                audio_file = audio_file_list[i-1] # i-1 ?? 
+                audio_file = audio_file_list[i-1] 
                 print(audio_file)
                 filepath = os.path.join(DATAPATH, audio_file.name)
                 with open(filepath, "wb") as f:
                     f.write(audio_file.getbuffer())
                 st.audio(audio_file, format='audio/mp3')
                 st.write("File uploaded successfully")
-            initial_prompt = st.text_area("Provide an initial transcription of the audio including any keywords expected from the audio" , height=250)
+        initial_prompt = st.text_area("Provide an initial transcription of the audio including any keywords expected from the audio" , height=250)
         submit = st.form_submit_button("transcribe") 
         if submit:
             if audio_file_list:         

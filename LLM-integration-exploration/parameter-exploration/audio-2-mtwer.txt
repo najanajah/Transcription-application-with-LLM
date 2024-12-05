@@ -1,0 +1,62 @@
+anaesthesia
+pathology 
+internal medicine. 
+internal medicine. 
+internal medicine. 
+endocrine
+
+pathology 
+anaesthesia
+endocrine 
+general medicine 
+medicine 
+outbreak 
+emergency 
+diabetes 
+diabetes 
+blood sugar 
+clinician
+clinical 
+clinical 
+clinical 
+clinical 
+clinicians 
+clinical 
+clinical 
+clinicians 
+clinical 
+diabetes 
+clinical 
+diabetes 
+diabetes 
+diabetes 
+diabetes
+diabetes
+diabetes
+diabetes
+inpatient 
+outpatient 
+inpatient 
+inpatient 
+inpatient 
+inpatient 
+outpatient 
+blood glucose 
+inpatients 
+blood glucose 
+prescription 
+insulin 
+blood sugar 
+blood sugars 
+medication 
+cholesterol 
+medications 
+endocinologist 
+patients 
+clinicians 
+general medicine 
+diabetes 
+endocrinologists 
+hypoglycaemia 
+inpatients 
+

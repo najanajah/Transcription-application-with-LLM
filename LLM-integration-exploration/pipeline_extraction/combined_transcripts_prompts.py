@@ -5,13 +5,6 @@ SPEAKER_BACKGROUND_PROMPT = ''' Use the provided transcripts to identify the bac
 Only provide the requested string format. Do not answer with anything other than the string. Do not answer with "Here is the background" or "The background is" or anything similar. Just provide the format response. ONLY use the information provided after TRANSCRIPTS to generate the background. 
 
 TRANSCRIPTS: \n
-{context}
-'''
-
-KEYWORDS_PROMPT = '''{context}
-extract keywords from the above context and combine them in a LIST format. Do not answer with anything other than the json text. For example:
-~
-["General Surgery", "Emergency Medicine", "Point-of-Care Ultrasound", "POCUS", "Surgical Knowledge"]
 '''
 
 IDENTIFY_TOPICS_PROMPT = ''' Identify and return a combined list from the above lists containing unique heading, summary and evidence. Combine evidence from different objects if necessary. Return the topics in a JSON format.
@@ -50,7 +43,6 @@ OUTPUT:
 The below transcripts are for the same interview between 2 speakers. All the COMMON HEADINGS from all the transcripts must be included in the final response.
 DO NOT USE THE EXAMPLE FOR ANSWERING. ONLY USE THE CONTEXT. Do not answer with anything other than the JSON. It MUST be a complete JSON. Do not answer with "Here is the summary" or "The summary is" or anything similar. Just provide the format JSON response. Do not use information from the EXAMPLE only the CONTEXT.
 \n 
-{context}
 '''
 
 FORMAT_SUFFIX = '''DO NOT USE THE EXAMPLE FOR ANSWERING. ONLY USE THE CONTEXT. Do not answer with anything other than the JSON. It MUST be a complete JSON. Do not answer with "Here is the summary" or "The summary is" or anything similar. Just provide the format JSON response. Do not use information from the EXAMPLE only the CONTEXT.'''

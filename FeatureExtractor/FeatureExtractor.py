@@ -30,7 +30,9 @@ def generate_keywords(context: str) -> str:
     '''Return keywords of the context. accepts list or string'''
     if DEBUG: 
         kw_ls = [random.choice(KEYWORDS_DEBUG) for i in range(5)] 
+        print("Feature extractor keywords: ", kw_ls)
         keyword_dict = {"Keywords": kw_ls}
+        return json.dumps(keyword_dict)
     prompt = prompts.KEYWORDS_PROMPT.format(context=context)
     Ollama = Ollama(model=LLM, prompt=prompt)
     response = Ollama.generate_retry()

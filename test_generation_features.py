@@ -1,7 +1,8 @@
 from FeatureExtractor.FeatureExtractor import replace_speaker_id_with_label, generate_background, generate_summary, generate_reflection, generate_conclusion
 
 '''
-This script is used to test the generation features of the FeatureExtractor module on the GPU resources. 
+This script is used to test the generation features of the FeatureExtractor module on the GPU resources.
+Set DEBUG = False in .\config.json to test. 
 The script will test the following functions:
     replace_speaker_id_with_label()
     generate_background()

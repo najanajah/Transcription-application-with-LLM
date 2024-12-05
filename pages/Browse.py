@@ -6,6 +6,10 @@ from docx import Document
 from database.model import get_all_id_and_filename, get_transcription, get_feature, get_report, regenerate_report_col
 from Utils.utils import make_text_readable_in_markdown
 
+# Set page configuration
+st.set_page_config(page_title="Transcription Application", page_icon=":microphone:", layout="wide", initial_sidebar_state="expanded")
+st.title("Browse transcriptions")
+
 '''
 Streamlit page for Browse transcriptions
 
@@ -75,7 +79,7 @@ def display_keywords(words):
     for col, word in zip(cols, words):
         with col:
             st.markdown(f"""
-                <div style="background-color: #ADD8E6;
+                <div style="background-color: #E1E1E1;
                             border-radius: 10px;
                             padding: 10px;
                             box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
@@ -83,9 +87,6 @@ def display_keywords(words):
                     <span style="font-size: 18px; color: #333;">{word}</span>
                 </div>
             """, unsafe_allow_html=True)
-# Setting page config
-st.set_page_config(page_title="Transcription Application", page_icon=":microphone:", layout="wide", initial_sidebar_state="expanded")
-st.title("Browse transcriptions")
 
 # Fetch all transcription data
 ALL_TRANSCRIPTIONS_TUPLE = get_all_id_and_filename()
@@ -102,6 +103,7 @@ if option:
     # Fetch the transcription and make it readable
     transcription = get_transcription(id)
     readable_transcription = make_text_readable_in_markdown(transcription[0][0], id)
+    transcription = transcription[0][0]
     
 
     # Fetch features and report data
@@ -122,7 +124,7 @@ if option:
     
     with col1:
         # Download button for transcript
-        transcript_doc = generate_transcript_docx(readable_transcription, id)
+        transcript_doc = generate_transcript_docx(transcription, id)
         transcript_file = convert_to_downloadable(transcript_doc)
         st.download_button(
             label="Download Transcript",
@@ -145,7 +147,7 @@ if option:
     st.markdown(f"##### Transcript : {option}")
     st.markdown(f"""
     <div style="
-        background-color: #ADD8E6;
+        background-color: #E1E1E1;
         border: 1px solid #000000;
         border-radius: 10px;
         padding: 20px;
@@ -167,15 +169,17 @@ if option:
 
     st.markdown(f"##### Keywords")
     try:
+        print("keywords data" , keywords_data)
         if keywords_data and isinstance(keywords_data[0], str):
+            print("here")
             keyword_json = json.loads(keywords_data[0].replace("'", "\""))  # Handle single quotes for JSON parsing
         else:
             keyword_json = {}
         title = "Keywords" if "Keywords" in keyword_json else "keywords"
         display_keywords(keyword_json.get(title, []))
     except Exception as e:
+        print("Keywords error" , e)
         st.warning("Failed to load keywords.")
         st.dataframe(pd.DataFrame({"Keywords": keywords_data}))
 
-    # Columns for download buttons
     

@@ -8,16 +8,16 @@ import os
 from evaluate import load
 from Utils.utils import clean_transcript_for_wer
 
+
+st.set_page_config(page_title="Transcription Application", page_icon=":microphone:", layout="wide", initial_sidebar_state="expanded")
+st.title("Edit transcriptions")
+
 '''
 Streamlit page for Edit transcriptions
 
 This page allows the user to edit the transcriptions, background, summary, reflection and conclusion of the transcriptions.
 
 '''
-
-st.set_page_config(page_title="Transcription Application", page_icon=":microphone:", layout="wide", initial_sidebar_state="expanded")
-st.title("Edit transcriptions")
-
 
 ALL_TRANSCRIPTIONS_TUPLE = get_all_id_and_filename()
 ALL_TRANSCRIPTIONS_LIST = [f"{pair[0]}: {pair[1]}" for pair in ALL_TRANSCRIPTIONS_TUPLE]
@@ -81,7 +81,7 @@ if option:
         
         update = st.button("Update Transcription") 
         if update: 
-            keywords, background, summary, reflection, conclusion = update_transcription(id,edited_transcription )
+            keywords, background, summary, reflection, conclusion = update_transcription(id,edited_transcription)
             print(uploaded_transcription)
             if uploaded_transcription is not None: 
                 wer_metric = load("wer")
@@ -123,10 +123,19 @@ if option:
             with left_column:
                 summary = get_report(id, "Summary")[0][0]
                 edited_summary = st.text_area("Edit Summary", value=summary, height=300)
-                update = st.button("Update Summary")
-                if update: 
-                    update_report(id, "Summary", edited_summary)
-                    st.success("Summary updated successfully")
+                l_col , r_col = st.columns(2)
+                with l_col:
+                    update = st.button("Update Summary")
+                    if update: 
+                        update_report(id, "Summary", edited_summary)
+                        st.success("Summary updated successfully")
+                with r_col:
+                     save_regen = st.button("Save and regenerate reflection and conclusion")
+                     if save_regen:
+                            update_report(id, "Summary", edited_summary)
+                            new_feature = regenerate_report_col(id, "Reflection")
+                            new_feature = regenerate_report_col(id, "Conclusion")
+                            st.success("Summary updated and Reflection and Conclusion regenerated successfully!")
 
     elif option_2=="Reflection":
             st.write(regen_text)
@@ -141,10 +150,19 @@ if option:
             with left_column:
                 reflection = get_report(id, "Reflection")[0][0]
                 edited_reflection = st.text_area("Edit Reflection", value=reflection, height=300)
-                update = st.button("Update Reflection")
-                if update: 
-                    update_report(id, "Reflection", edited_reflection)
-                    st.success("Reflection updated successfully")
+                l_col , r_col = st.columns(2)
+                with l_col:
+                    update = st.button("Update Reflection")
+                    if update: 
+                        update_report(id, "Reflection", edited_reflection)
+                        st.success("Reflection updated successfully")
+                with r_col:
+                        save_regen = st.button("Save and regenerate conclusion")
+                        if save_regen:
+                                update_report(id, "Reflection", edited_reflection)
+                                new_feature = regenerate_report_col(id, "Conclusion")
+                                st.success("Reflection updated and Conclusion regenerated successfully!")
+                                
     elif option_2=="Conclusion":
             st.write(regen_text)
             if st.button("Regenerate Conclusion"): 
