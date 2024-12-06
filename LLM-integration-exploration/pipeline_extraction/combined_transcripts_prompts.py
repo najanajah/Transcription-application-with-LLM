@@ -1,3 +1,7 @@
+'''
+This file contains the prompts for the combined transcripts task in the pipeline.
+'''
+
 SPEAKER_BACKGROUND_PROMPT = ''' Use the provided transcripts to identify the background of the interviewee. Return the background of the speakers in a JSON format. For example:
 ~
 "The speaker participated in a medical posting that spanned two weeks, focusing on both General Surgery (GS) and Emergency Medicine (EM). The primary focus was on enhancing their surgical knowledge and exposure to emergency medicine, specifically through the use of point-of-care ultrasound (POCUS). This was an elective experience aimed at revising existing medical knowledge and gaining hands-on skills."

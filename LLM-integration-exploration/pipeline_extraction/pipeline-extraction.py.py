@@ -18,12 +18,34 @@ from uuid import uuid4
 from AudioToText.utils import merge_sentence 
 from combined_transcripts_prompts import IDENTIFY_TOPICS_PROMPT, SUMMARY_PROMPT, hallucination_prompt, JSON_PROMPT, KEYWORD_WHISPER_PROMPT, SPEAKER_BACKGROUND_PROMPT, FORMAT_SUFFIX, REFLECTION_PROMPT,CONCLUSION_PROMPT
 
+'''
+This script implements a pipeline for extracting information from audio files using the following steps:
+    1. Splitting the audio file into chunks
+    2. Transcribing the audio file
+    3. Retrieving the top 4 references from the vectorstore
+    4. Transcribing the audio file with the top 4 references as prompts
+    5. Generating summaries for each of the transcriptions
+    6. Combining the summaries into a single summary
+    7. Generating speaker background
+    8. Generating reflection
+    9. Generating conclusion
+
+Excel files are downloaded at each stage of execution detailing the input, output and time taken. 
+
+Variables to change: 
+    1. LLM_MODEL: The model used for generating text
+    2. AUDIO: The path to the audio file
+    3. FILENAME: The name of the output files
+    4. Credentials_path : The path to the credentials.json file containing the Huggingface token
+    
+'''
 
 LLM_MODEL = "llama3:instruct"
 ### df for storing results
 df = pd.DataFrame(columns=["id", "prompt","task", "model", "response", "time-taken", "start-time", "end-time"])
 FILENAME = "results-WITH-SPLIT-AUDIO-TRANS-ONLY"
 os.makedirs("output", exist_ok=True)
+credentials_path = os.path.join(os.getcwd(),"credentials.json")
 
 ### creating vectorstore client 
 files = os.listdir("references")
@@ -123,7 +145,7 @@ def diarize_result(whisper_result, diarization_result):
             
         return processed
  
-key_path = os.path.join(os.getcwd(),"credentials.json")
+key_path = os.path.join(credentials_path)
 with open(key_path, "r") as file : 
             key =  json.load(file).get("HUGGINGFACE_TOKEN")
 print("loading Pyannote pipeline...")
@@ -193,16 +215,6 @@ for id , prompt in enumerate(prompts):
 df.to_excel(f"{FILENAME}-3.xlsx", index=False)
 
 
-
-# def get_background(d_transcripts) -> str:
-#     BACKGROUND_PROMPT = SPEAKER_BACKGROUND_PROMPT + "\n\n".join(d_transcripts)
-#     response = ollama.generate(model='LLM_MODEL', prompt=BACKGROUND_PROMPT)
-#     response = response['response']
-#     return response
-
-# background_str = get_background()
-
-
 def check_hallucination(transcript , generated_response): 
     try: 
         response = ollama.generate(model=LLM_MODEL, prompt=hallucination_prompt.format(context=transcript, text=generated_response))
@@ -220,17 +232,7 @@ def check_hallucination(transcript , generated_response):
     
 def get_summary_list(txt:str) -> list:
     try: 
-        # txt = txt.encode('utf-8').decode('utf-8', errors='replace')
         return json.loads(txt)
-        # print(txt)
-        # pattern = r"(\[*?\])"
-        # matches = re.search(pattern, txt, re.DOTALL)
-        # if matches: 
-        #     txt = matches.group()
-        #     response =  json.loads(txt)
-        #     return response
-        # else: 
-        #     raise Exception("No matches found")
     except Exception as e:
         pass
         response = ollama.generate(model=LLM_MODEL, prompt=JSON_PROMPT.format(context=txt, format="list of JSON objects"))
@@ -241,9 +243,6 @@ def get_summary_list(txt:str) -> list:
         
 MAX_RETRY = 3
 
-# add transcription and generate the halluciantion test here 
-# max will test 3 times > debug ver no hallucination test 
-
 
 def generate_summary(context: str) -> str:
     '''Return a summary of the context'''
@@ -253,16 +252,7 @@ def generate_summary(context: str) -> str:
             print("attempting to summarize")
             response = ollama.generate(model=LLM_MODEL, prompt=SUMMARY_PROMPT.format(context=context))
             response = response['response']
-            # will retry if it cant be parsed or if it is hallucination
-            # summary_list = get_summary_list(response)
             summary_list = []
-            # hallucination = check_hallucination(context, response)
-            # if hallucination == "YES":
-            #     print("Hallucination detected")
-            #     return retry(retry_count + 1)
-            ## DEBUG 
-            # response = "trial"
-            # summary_list = "trial"
             return summary_list, response
         except Exception as e:
             if retry_count >= MAX_RETRY: 
@@ -291,8 +281,6 @@ with open("testing-list.txt", "w") as f:
         f.write("%s\n" % item)
 
 ## combining summaries 
-
-
 prompt = "CONTEXT \n"
 for id, summary in enumerate(sum_str_ls):
     if type(summary) == str :
@@ -364,6 +352,7 @@ with open(background_path, "w") as file :
             file.write(background_response)
 df.loc[len(df)] = {"id": 7  ,"prompt" : APPENDED_SPEAKER_BACKGROUND_PROMPT, "model" : LLM_MODEL, "task": "speaker background" , "response": background_response , "time-taken": et-st, "start-time": st, "end-time": et}
 
+## reflection generation 
 
 def generate_reflection(background_response: str , context: str ) -> str:
     '''Return a summary of the context'''
@@ -390,7 +379,7 @@ with open(reflection_path, "w") as file :
             file.write(reflection_response)
 df.loc[len(df)] = {"id": 8  ,"prompt" : REFLECTION_PROMPT, "model" : LLM_MODEL, "task": "speaker background" , "response": reflection_response , "time-taken": et-st, "start-time": st, "end-time": et}
 
-
+## conclusion generation
 def generate_conclusion(context ,reflection, background ) -> str:
     '''Return a summary of the context'''
     count = 1

@@ -16,6 +16,9 @@ from pyannote.core import Segment
 import pandas as pd
 from combined_transcripts_prompts import IDENTIFY_TOPICS_PROMPT, SUMMARY_PROMPT_1, SUMMARY_PROMPT_2, SUMMARY_PROMPT_3, hallucination_prompt, JSON_PROMPT, KEYWORD_WHISPER_PROMPT, SPEAKER_BACKGROUND_PROMPT, FORMAT_SUFFIX, REFLECTION_PROMPT,CONCLUSION_PROMPT,SPEAKER_ID_PROMPT
 
+'''
+Used to generate the direct pipeline responses for transcripts as baseline approach for evaluation. 
+'''
 
 LLM_MODEL = "llama3:instruct"
 

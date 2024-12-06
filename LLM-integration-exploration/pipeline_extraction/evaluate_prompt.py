@@ -1,3 +1,6 @@
+'''
+This file contains the prompts for the LLM evaluator to evaluate the generated text based on the given METRIC and TASK.
+'''
 hallucination_prompt = '''
 You are an expert evaluator. You have been given the task of evaluating the following 2 texts based on to find HALLUCINATION.
 HALLUCINATION is defined as a text that is either factually incorrect, nonsensical, or disconnected from the GROUND TRUTH.

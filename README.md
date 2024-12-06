@@ -37,12 +37,12 @@ Step-by-step instructions to set up the project locally:
    `git clone https://github.com/najanajah/Transcription-application-with-LLM.git`
 2. Navigate to the project directory:  
    `cd Transcription-application-with-LLM`
-3. Install dependencies:  
+3. Install dependencies (compatible with `python 3.11.4`):  
    `pip install -r requirements.txt` 
 4. Additional setup instructions.
-    - Please ensure Ollama is setup up and running on the device. Ensure you have pulled the `llama3:instruct` model. 
-    - Streamlit may have to be installed separately to run the program. 
-    - Ensure `SQLite` is also successfully installed.  
+    - Please ensure [Ollama](https://ollama.com/download) is setup up and the server is running on the device. Ensure you have pulled the `llama3:instruct` model. 
+    - [Streamlit](https://streamlit.io/) may have to be installed separately to run the program. 
+    - Ensure [`SQLite`](https://www.sqlite.org/download.html) is also successfully installed.  
 5. Create the database by running `python database\create_db.py`
 6. Create a credentials.json file and add the Huggingface token in the following format.
    ` 
@@ -56,7 +56,7 @@ Step-by-step instructions to set up the project locally:
 ## Usage
 
 Instructions on how to run and use the project:
-- For disabling debug mode (No LLM generation) change the value in config.json from true -> false. 
+- For disabling debug mode (No LLM generation) change the value in config.json from true to false. 
 - Command to start the project:  
   `streamlit run Transcribe.py`
 

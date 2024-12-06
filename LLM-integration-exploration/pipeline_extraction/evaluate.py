@@ -16,10 +16,34 @@ from pyannote.core import Segment
 import pandas as pd
 from evaluate_prompt import hallucination_prompt
 from task import SPEAKER_BACKGROUND_PROMPT, REFLECTION_PROMPT, CONCLUSION_PROMPT, SUMMARY_PROMPT_1
+
+'''
+Used to evaluate the direct and pipeline generations using a head-to-head comparison on 3 metrics.
+    1. Comprehensiveness
+    2. Directness
+    3. Diversity
+
+Ensure that the direct pipeline responses are generated before running this script.
+
+the scripts for comparison should be in the following directory structure:
+    evaluate
+        audio_1
+            direct
+                background.txt
+                summary.txt
+                reflection.txt
+                conclusion.txt
+            generated
+                background.txt
+                summary.txt
+                reflection.txt
+                conclusion.txt
+'''
 LLM_MODEL = "llama3:instruct"
 
 if __name__=="__main__":
-    dir = os.path.join(os.getcwd(), "evaluate", "audio_1")
+    audio = "audio_1"
+    dir = os.path.join(os.getcwd(), "evaluate", audio)
     direct_dir = os.path.join(dir, "direct")
     gen_dir = os.path.join(dir, "generated")
     reference = os.path.join(dir, "reference")
